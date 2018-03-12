@@ -28,13 +28,13 @@
             <li>
               <span *ngIf="showEdit !== i">
                 {{child.name}}
-                <button name="edit" class="button tiny" (click)="edit(i)">Edit</button>
-                <button name="delete" type="button" class="button tiny" *ngIf="showEdit!==i"
+                <button name="edit" class="button tiny"(click)="edit(i)">Edit</button>
+                <button name="delete" type="button" class="button tiny"
                         (click)="openConfirmDeleteDialog(i)">Delete</button>
               </span>
               <span *ngIf="showEdit === i">
-              <input type="text" [(ngModel)]="child.name" [ngModelOptions]="{standalone: true}" *ngIf="showEdit === i" #child>
-              <button name="save" type="button" class="button tiny"
+              <input type="text" [(ngModel)]="child.name" [ngModelOptions]="{standalone: true}">
+              <button  name="save" type="button" class="button tiny"
                       (click)="save()">Save</button>
               <button name="cancel" type="button" class="button tiny"
                       (click)="cancel(i)">Cancel</button>
