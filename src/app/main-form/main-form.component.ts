@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import {Router, NavigationExtras} from '@angular/router';
 
 @Component({
   selector: 'app-main-form',
@@ -13,16 +14,12 @@ export class MainFormComponent implements OnInit {
   parentFirstName: string;
   parentLastName: string;
   titleAlert = 'This field is required!';
-  addChildMode = false;
-  showEdit: number;
-  oldName: string;
-  children = [];
 
-  constructor(private fb: FormBuilder, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router) {
     this.rForm = fb.group({
       parentFirstName: [null, Validators.required],
       parentLastName: [null, Validators.compose([Validators.required, Validators.minLength(1)])],
-      childName: [null, Validators.minLength(3)]
+      children: fb.array([])
     });
   }
 
@@ -30,20 +27,29 @@ export class MainFormComponent implements OnInit {
   }
 
   addPost(post) {
-    this.parentFirstName = post.parentFirstName;
-    this.parentLastName = post.parentLastName;
+    // this.router.navigate([`/parent-info/${post.parentFirstName + post.parentLastName}`]).then(data => {
+    //   this.rForm.reset();
+    // });
+    // this.router.navigate(['/parent-info', post.parentFirstName, post.parentLastName]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'firstname': post.parentFirstName,
+        'lastname': post.parentLastName
+      }
+    };
+    this.router.navigate(['parent-info/'], navigationExtras);
   }
 
-  switchAddChildMode() {
-    this.addChildMode = !this.addChildMode;
+  addChild(): void {
+    const children = <FormArray>this.rForm.controls['children'];
+    children.push(this.initChild());
   }
 
-  addChild(newChild): void {
-    if (newChild.value.length) {
-      this.children.push({name: newChild.value});
-      this.rForm.controls['childName'].reset();
-      this.switchAddChildMode();
-    }
+  initChild() {
+    return this.fb.group({
+      name: [, Validators.required],
+      age: [, Validators.compose([Validators.required, Validators.max(17)])]
+    });
   }
 
   openConfirmDeleteDialog(i) {
@@ -56,21 +62,8 @@ export class MainFormComponent implements OnInit {
   }
 
   deleteChild(index): void {
-    this.children.splice(index, 1);
-  }
-
-  edit(index): void {
-    this.showEdit = index;
-    this.oldName = this.children[index].name;
-  }
-
-  save(): void {
-    this.showEdit = -1;
-  }
-
-  cancel(index): void {
-    this.children[index].name = this.oldName;
-    this.showEdit = -1;
+    const children = <FormArray>this.rForm.controls['children'];
+    children.removeAt(index);
   }
 
 }

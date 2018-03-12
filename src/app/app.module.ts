@@ -1,15 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule, Routes} from '@angular/router';
 
 
-
-import { AppComponent } from './app.component';
-import { MainFormComponent } from './main-form/main-form.component';
+import {AppComponent} from './app.component';
+import {MainFormComponent} from './main-form/main-form.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
+import { ParentInfoComponent } from './parent-info/parent-info.component';
+import { HomeComponent } from './home/home.component';
 
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'parent-info', component: ParentInfoComponent },
+  { path: 'add-parent', component: MainFormComponent }
+];
 
 
 
@@ -17,7 +24,9 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
   declarations: [
     AppComponent,
     MainFormComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ParentInfoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -25,10 +34,12 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ ConfirmDialogComponent ]
+  entryComponents: [ConfirmDialogComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
