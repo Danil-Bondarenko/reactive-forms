@@ -49,7 +49,7 @@
 
           <h4>Child details:</h4>
           <label>Child Name:
-            <input  type="text" #newChild name="newChild">
+            <input  type="text" #newChild name="newChild" formControlName="childName">
           </label>
           <div class="alert"
                *ngIf="!rForm.controls['childName'].valid && rForm.controls['childName'].touched">

@@ -41,7 +41,7 @@ export class MainFormComponent implements OnInit {
   addChild(newChild): void {
     if (newChild.value.length) {
       this.children.push({name: newChild.value});
-      newChild.value = '';
+      this.rForm.controls['childName'].reset();
       this.switchAddChildMode();
     }
   }
