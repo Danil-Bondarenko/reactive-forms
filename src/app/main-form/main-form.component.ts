@@ -31,13 +31,13 @@ export class MainFormComponent implements OnInit {
     //   this.rForm.reset();
     // });
     // this.router.navigate(['/parent-info', post.parentFirstName, post.parentLastName]);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        'firstname': post.parentFirstName,
-        'lastname': post.parentLastName
-      }
-    };
-    this.router.navigate(['parent-info/'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     'firstname': post.parentFirstName,
+    //     'lastname': post.parentLastName
+    //   }
+    // };
+    this.router.navigate(['parent-info/'], {queryParams: {'firstname': post.parentFirstName, 'lastname': post.parentLastName}}, );
   }
 
   addChild(): void {

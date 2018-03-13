@@ -1,7 +1,4 @@
-<p>
-  Parent First Name: {{firstName}}
-</p>
-<p>
-  Parent Last Name: {{lastName}}
-</p>
-
+<form [formGroup]="rForm">
+  <input formControlName="firstname">
+  <input formControlName="lastname">
+</form>

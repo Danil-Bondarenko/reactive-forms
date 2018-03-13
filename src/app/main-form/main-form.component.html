@@ -1,106 +1,79 @@
-<div *ngIf="!parentFirstName; else postedForm">
-  <form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)" name="form1">
-    <div class="form-container" style="width: 50%">
+<form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)" name="form1">
+  <div class="form-container" style="width: 50%">
 
-      <div class="row columns">
-        <h4>Parent Details:</h4>
-        <label>Parent First Name:
-          <input type="text" formControlName="parentFirstName">
-        </label>
-        <div class="alert"
-             *ngIf="!rForm.controls['parentFirstName'].valid && rForm.controls['parentFirstName'].touched">
-          {{titleAlert}}
-        </div>
-
-        <div class="parent-last-name">
-          <label>Parent Last Name:
-            <input type="text" formControlName="parentLastName">
-          </label>
-          <div class="alert"
-               *ngIf="!rForm.controls['parentLastName'].valid && rForm.controls['parentLastName'].touched">
-            {{titleAlert}}
-          </div>
-        </div>
-
-        <h5>Children:</h5>
-        <div class="children-array" formArrayName="children">
-          <ul *ngFor="let child of rForm.controls['children'].controls; let i = index;">
-            <div [formGroupName]="i">
-              <li>name:
-                <input formControlName="name" required>
-              </li>
-              <li>age:
-                <input formControlName="age" required>
-              </li>
-              <input type="button" (click)="openConfirmDeleteDialog(i)" class="button tiny" value="Delete">
-            </div>
-            <!--<li>-->
-            <!--<span *ngIf="showEdit !== i">-->
-            <!--{{child.name}}-->
-            <!--<button name="edit" class="button tiny"(click)="edit(i)">Edit</button>-->
-            <!--<button name="delete" type="button" class="button tiny"-->
-            <!--(click)="openConfirmDeleteDialog(i)">Delete</button>-->
-            <!--</span>-->
-            <!--<span *ngIf="showEdit === i">-->
-            <!--<input type="text" [(ngModel)]="child.name" [ngModelOptions]="{standalone: true}">-->
-            <!--<button  name="save" type="button" class="button tiny" [disabled]="child.name.length < 1"-->
-            <!--(click)="save()">Save</button>-->
-            <!--<button name="cancel" type="button" class="button tiny"-->
-            <!--(click)="cancel(i)">Cancel</button>-->
-            <!--</span>-->
-            <!--</li>-->
-          </ul>
-        </div>
-
-        <input type="button" class="button" (click)="addChild();" value="+">
-
-        <!--<div class="child-details" *ngIf="addChildMode">-->
-
-        <!--<h4>Child details:</h4>-->
-        <!--<label>Child Name:-->
-        <!--<input  type="text" name="newChild" formControlName="childName">-->
-        <!--</label>-->
-        <!--<div class="alert"-->
-        <!--*ngIf="!rForm.controls['childName'].valid && rForm.controls['childName'].touched">-->
-        <!--This field must contain at least 3 characters-->
-        <!--</div>-->
-
-        <!--<div>-->
-        <!--<input  type="button" class="button" value="Add child" (click)="addChild(rForm.controls['childName']);">-->
-        <!--</div>-->
-
-        <!--</div>-->
-        <input type="submit" class="button" style="width: 100%; margin-top: 25px;" value="Submit Form"
-               [disabled]="!rForm.valid">
+    <div class="row columns">
+      <h4>Parent Details:</h4>
+      <label>Parent First Name:
+        <input type="text" formControlName="parentFirstName">
+      </label>
+      <div class="alert"
+           *ngIf="!rForm.controls['parentFirstName'].valid && rForm.controls['parentFirstName'].touched">
+        {{titleAlert}}
       </div>
 
-    </div>
-  </form>
+      <div class="parent-last-name">
+        <label>Parent Last Name:
+          <input type="text" formControlName="parentLastName">
+        </label>
+        <div class="alert"
+             *ngIf="!rForm.controls['parentLastName'].valid && rForm.controls['parentLastName'].touched">
+          {{titleAlert}}
+        </div>
+      </div>
 
-</div>
-
-<ng-template #postedForm>
-  <div class="form-container">
-    <div class="row columns">
-
-      <h4>Parent Details:</h4>
-
-      <ul>
-        <li>First Name:
-          {{parentFirstName}}
-        </li>
-        <li>Last Name:
-          {{parentLastName}}
-        </li>
-      </ul>
-
-      <div class="children-array" *ngIf="children.length>0">
-        <h4>Children:</h4>
-        <ul *ngFor="let child of children">
-          <li>{{child.name}}</li>
+      <h5>Children:</h5>
+      <div class="children-array" formArrayName="children">
+        <ul *ngFor="let child of rForm.controls['children'].controls; let i = index;">
+          <div [formGroupName]="i">
+            <li>name:
+              <input formControlName="name" required>
+            </li>
+            <li>age:
+              <input formControlName="age" required>
+            </li>
+            <input type="button" (click)="openConfirmDeleteDialog(i)" class="button tiny" value="Delete">
+          </div>
+          <!--<li>-->
+          <!--<span *ngIf="showEdit !== i">-->
+          <!--{{child.name}}-->
+          <!--<button name="edit" class="button tiny"(click)="edit(i)">Edit</button>-->
+          <!--<button name="delete" type="button" class="button tiny"-->
+          <!--(click)="openConfirmDeleteDialog(i)">Delete</button>-->
+          <!--</span>-->
+          <!--<span *ngIf="showEdit === i">-->
+          <!--<input type="text" [(ngModel)]="child.name" [ngModelOptions]="{standalone: true}">-->
+          <!--<button  name="save" type="button" class="button tiny" [disabled]="child.name.length < 1"-->
+          <!--(click)="save()">Save</button>-->
+          <!--<button name="cancel" type="button" class="button tiny"-->
+          <!--(click)="cancel(i)">Cancel</button>-->
+          <!--</span>-->
+          <!--</li>-->
         </ul>
       </div>
 
+      <input type="button" class="button" (click)="addChild();" value="+">
+
+      <!--<div class="child-details" *ngIf="addChildMode">-->
+
+      <!--<h4>Child details:</h4>-->
+      <!--<label>Child Name:-->
+      <!--<input  type="text" name="newChild" formControlName="childName">-->
+      <!--</label>-->
+      <!--<div class="alert"-->
+      <!--*ngIf="!rForm.controls['childName'].valid && rForm.controls['childName'].touched">-->
+      <!--This field must contain at least 3 characters-->
+      <!--</div>-->
+
+      <!--<div>-->
+      <!--<input  type="button" class="button" value="Add child" (click)="addChild(rForm.controls['childName']);">-->
+      <!--</div>-->
+
+      <!--</div>-->
+      <input type="submit" class="button" style="width: 100%; margin-top: 25px;" value="Submit Form"
+             [disabled]="!rForm.valid">
     </div>
+
   </div>
-</ng-template>
+</form>
+
+

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-parent-info',
@@ -8,22 +9,19 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ParentInfoComponent implements OnInit {
 
-  firstName: string;
-  lastName: string;
+  rForm: FormGroup;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+    this.rForm = fb.group({
+      firstname: [, Validators.required],
+      lastname: [, Validators.compose([Validators.required, Validators.minLength(3)])]
+    });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.firstName = params['firstname'];
-      this.lastName = params['lastname'];
-      console.log(params);
+      this.rForm.patchValue(params);
     });
   }
 
   ngOnInit() {
-    // this.activatedRoute.params.subscribe(params => {
-    //   this.parentFirstName = params.parentFirstName;
-    //   this.parentLastName = params.parentLastName;
-    // });
   }
 
 }
